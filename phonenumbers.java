@@ -38,10 +38,12 @@ public class phonenumbers
 		};
 		
 		int numbers = 0;
+	   
+		// создаём словарь из исходных данных: ключ - символ, значение - цифра
+		HashMap<String, String> map = new HashMap<>(); 			
 		
-		HashMap<String, String> map = new HashMap<>(); 			// создаём словарь из исходных данных: ключ - символ, значение - цифра
-		
-		HashSet<String> ignoredSymbols = new HashSet<String>();	// создаем и заполняем множество игнорируемых символов при вводе пользователя: +, -, (, ), пробел
+	  	// создаем и заполняем множество игнорируемых символов при вводе пользователя: +, -, (, ), пробел
+		HashSet<String> ignoredSymbols = new HashSet<String>();	
 		ignoredSymbols.add("+");
 		ignoredSymbols.add("-");
 		ignoredSymbols.add(" ");
@@ -50,7 +52,8 @@ public class phonenumbers
 		
 		StringBuilder phoneNumberFinal = new StringBuilder("");
 		
-		for (int i = 0; i < symbols.length; i++) { 				// заполняем словарь парами буква-цифра
+	   	// заполняем словарь парами буква-цифра
+		for (int i = 0; i < symbols.length; i++) { 				
 			for (int j = 1; j < symbols[i].length; j++) {
 				map.put(symbols[i][j], symbols[i][0]);
 			}
@@ -59,31 +62,42 @@ public class phonenumbers
 		Scanner scanner = new Scanner(System.in); 			
 		System.out.println("Введите номер телефона (допустимые символы: +, -, (, ), 0...9, A...Z)");
 		
+	   	
 		while (numbers == 0) {
-			String phoneNumberStart = scanner.nextLine();						// считываем номер телефона с консоли
 			
-			for (int k = 0; k < phoneNumberStart.length(); k++) { 				// проверяем поочередно каждый введенный символ и сравниваем его с условиями
+			// считываем номер телефона с консоли
+			String phoneNumberStart = scanner.nextLine();						
+			
+			// проверяем поочередно каждый введенный символ и сравниваем его с условиями
+			for (int k = 0; k < phoneNumberStart.length(); k++) { 				
 				String checkedSymbol = String.valueOf(phoneNumberStart.charAt(k)).toUpperCase(); 		
 				
-				if (map.containsValue(checkedSymbol)) { 						// условие для введенной цифры
+				// условие для введенной цифры
+				if (map.containsValue(checkedSymbol)) { 						
 					phoneNumberFinal.append(checkedSymbol);
 				}	
 				
-				else if (map.containsKey(checkedSymbol)) {						// условие для введенной буквы - заменяем на цифру
+				// условие для введенной буквы - заменяем на цифру
+				else if (map.containsKey(checkedSymbol)) {						
 					phoneNumberFinal.append(map.get(checkedSymbol));
 				}
 				
-				else if (ignoredSymbols.contains(checkedSymbol)) {				// условие для игнорируемых символов
+				// условие для игнорируемых символов
+				else if (ignoredSymbols.contains(checkedSymbol)) {				
 				}
 				
-				else {															// условие для ошибочного символа
+				// условие для ошибочного символа
+				else {															
 					System.out.println("Ошибка! Повторите ввод. Допустимые символы: +, -, (, ), 0...9, A...Z)");
 					phoneNumberFinal.delete(0, k);
 					numbers = 0;
 					break;
 				}
+				
 			numbers++;
+				
 			}
+			
 			if (numbers != 0) {
 				break;
 			}			
