@@ -45,27 +45,32 @@ public class phonenumbers
 		
 		Scanner scanner = new Scanner(System.in); 			
 		System.out.println("Введите номер телефона (допустимые символы: +, -, (, ), 0...9, A...Z)");
-		String phoneNumberFinal;							
-		while (true) {
+		String phoneNumberFinal = "";
+		
+		while (phoneNumberFinal == "") {
 			String phoneNumberStart = scanner.nextLine();	// считываем номер телефона с консоли
-			phoneNumberFinal = "";
+			
 			for (int k = 0; k < phoneNumberStart.length(); k++) { 	// проверяем поочередно каждый введенный символ и сравниваем его с условиями
 				String checkedSymbol = String.valueOf(phoneNumberStart.charAt(k)); 		
+				
 				if ((checkedSymbol.equals("+")) || (checkedSymbol.equals("-")) || (checkedSymbol.equals("(")) || (checkedSymbol.equals(")"))) {
 					phoneNumberFinal = phoneNumberFinal + "";
 				}
+				
 				else if ((checkedSymbol.equals("0"))  || (checkedSymbol.equals("1")) || map.containsValue(checkedSymbol)) { // здесь для сокращения кода, проверяем, нет ли символа в значениях словаря
 					phoneNumberFinal = phoneNumberFinal + checkedSymbol;
 				}	
+				
 				else if (map.containsKey(checkedSymbol)) {			// условия для введенной буквы - заменяем на цифру
 					phoneNumberFinal = phoneNumberFinal + map.get(checkedSymbol);
 				}
+				
 				else {
 					System.out.println("Ошибка! Повторите ввод. Допустимые символы: +, -, (, ), 0...9, A...Z)");
+					phoneNumberFinal = "";
 					break;
 				}	
 			}
-			break;
 		}
 		System.out.println("Номер телефона в выбранном формате: " + phoneNumberFinal);
 	}		
